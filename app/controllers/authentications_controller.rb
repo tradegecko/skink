@@ -7,6 +7,12 @@ class AuthenticationsController < ApplicationController
       # Create Channel in TG
       # Create webhooks in a background job
       # redirect to install flow settings step
+      RestClient::Request.execute({
+        method: :post,
+        url: "#{ENV['TRADEGECKO_API_URL']}/channels",
+        headers: { authorization: "Bearer #{current_account.access_token}" },
+        payload: { channel: { name: "ABC Store", site: "abc.com" } }
+      })
       redirect_to "http://go.lvh.me:3000/integrations/shopify-install/location-setting/174"
     when 'tradegecko'
       account = Account.find_or_create_from_omniauth(auth)
@@ -28,6 +34,6 @@ private
   end
 
   def lazada_auth_url
-    "https://auth.lazada.com/oauth/authorize?response_type=code&force_auth=true&redirect_uri=#{ENV['NGROK_URL']}/auth/lazada/callback&client_id=106561"
+    "https://auth.lazada.com/oauth/authorize?response_type=code&force_auth=true&redirect_uri=#{ENV['NGROK_URL']}/auth/lazada/callback&client_id=#{ENV['LAZADA_APP_KEY']}"
   end
 end

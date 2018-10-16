@@ -65,3 +65,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'omniauth-tradegecko'
 gem 'access_token_wrapper'
 gem 'gecko-ruby'
+gem 'rest-client'
