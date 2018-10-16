@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_15_163115) do
+ActiveRecord::Schema.define(version: 2018_10_16_102902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 2018_10_15_163115) do
     t.datetime "updated_at", null: false
     t.bigint "account_id"
     t.bigint "tradegecko_application_id"
+    t.jsonb "settings", default: {}
     t.index ["account_id"], name: "index_channels_on_account_id"
     t.index ["tradegecko_application_id"], name: "index_channels_on_tradegecko_application_id"
   end
