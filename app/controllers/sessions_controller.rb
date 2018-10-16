@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     account.update_from_access_token(token)
     session[:account_id] = account.id
     session[:user_id] = auth.uid
-    redirect_to root_url
+    redirect_to "https://auth.lazada.com/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://crescodata.com/auth/tradegecko/callback&client_id=106561"
   end
 
   def destroy
