@@ -9,7 +9,7 @@ class TradegeckoVerifier
 
   def run
     unless verification_passed?
-      raise Shared::UnverifiedRequest.new("The request is not from TradeGecko")
+      raise UnverifiedRequest.new("The request is not from TradeGecko")
     end
   end
 
