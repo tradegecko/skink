@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_17_055208) do
+ActiveRecord::Schema.define(version: 2018_10_17_095043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,30 @@ ActiveRecord::Schema.define(version: 2018_10_17_055208) do
     t.integer "tradegecko_id"
     t.index ["account_id"], name: "index_channels_on_account_id"
     t.index ["tradegecko_application_id"], name: "index_channels_on_tradegecko_application_id"
+  end
+
+  create_table "error_logs", force: :cascade do |t|
+    t.string "message"
+    t.string "verb"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "channel_id"
+    t.bigint "resource_reference_id"
+    t.index ["channel_id"], name: "index_error_logs_on_channel_id"
+    t.index ["resource_reference_id"], name: "index_error_logs_on_resource_reference_id"
+  end
+
+  create_table "resource_references", force: :cascade do |t|
+    t.integer "tradegecko_id"
+    t.string "resource_type"
+    t.integer "tradegecko_parent_id"
+    t.string "display_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "account_id"
+    t.bigint "channel_id"
+    t.index ["account_id"], name: "index_resource_references_on_account_id"
+    t.index ["channel_id"], name: "index_resource_references_on_channel_id"
   end
 
   create_table "tradegecko_applications", force: :cascade do |t|
