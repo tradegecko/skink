@@ -4,15 +4,11 @@ class AuthenticationsController < ApplicationController
     when 'lazada'
       # This is to simulate the flow after Cresco has been authenticated by Lazada
       # Save the tokens from Lazada
-      # Create Channel in TG
-      # Create webhooks in a background job
-      # redirect to install flow settings step
-      RestClient::Request.execute({
-        method: :post,
-        url: "#{ENV['TRADEGECKO_API_URL']}/channels",
-        headers: { authorization: "Bearer #{current_account.access_token}" },
-        payload: { channel: { name: "ABC Store", site: "abc.com" } }
-      })
+      # Create a Channel in TG
+      # Create Webhooks in a background job
+      # Redirect to a step in the setup flow
+      tradegecko_id = create_channel_in_tradegecko
+      current_account.channels.create(tradegecko_id: tradegecko_id, tradegecko_application_id: tradegecko_application_id)
       redirect_to "http://go.lvh.me:3000/integrations/shopify-install/location-setting/174"
     when 'tradegecko'
       account = Account.find_or_create_from_omniauth(auth)
@@ -28,6 +24,20 @@ class AuthenticationsController < ApplicationController
   end
 
 private
+
+  def create_channel_in_tradegecko
+    response = RestClient::Request.execute({
+      method: :post,
+      url: "#{ENV['TRADEGECKO_API_URL']}/channels",
+      headers: { authorization: "Bearer #{current_account.access_token}" },
+      payload: { channel: { name: "ABC Storezzzz", site: "abc.comzzzz" } }
+    })
+    JSON.parse(response.body)["oauth_channel"]["id"]
+  end
+
+  def tradegecko_application_id
+    current_account.tradegecko_application_id
+  end
 
   def auth
     request.env["omniauth.auth"]

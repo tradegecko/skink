@@ -1,5 +1,6 @@
 class Account < ApplicationRecord
   has_many :channels
+  belongs_to :tradegecko_application
 
   def self.find_or_create_from_omniauth(auth)
     self.where(tradegecko_id: auth.info.account_id).first_or_create
