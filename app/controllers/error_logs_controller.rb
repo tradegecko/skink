@@ -10,7 +10,7 @@ class ErrorLogsController < ApplicationController
     if limit
       @error_logs = @error_logs.limit(end_idx)[start_idx..end_idx]
     end
-    render json: @error_logs.to_json
+    render json: @error_logs
   end
 
   def ignore
