@@ -4,7 +4,7 @@ class Account < ApplicationRecord
   has_many :resource_references
 
   def self.find_or_create_from_omniauth(auth)
-    self.where(tradegecko_id: auth.info.account_id).first_or_create
+    self.where(tradegecko_id: auth.info.account_id, tradegecko_application_id: 1).first_or_create
   end
 
   def update_from_access_token(access_token)
