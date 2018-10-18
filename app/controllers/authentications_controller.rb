@@ -7,8 +7,10 @@ class AuthenticationsController < ApplicationController
       # Create a Channel in TG
       # Create Webhooks in a background job
       # Redirect to a step in the setup flow
-      tradegecko_id = create_channel_in_tradegecko
-      current_account.channels.create(tradegecko_id: tradegecko_id, tradegecko_application_id: tradegecko_application_id)
+      unless current_account.channels.first
+        tradegecko_id = create_channel_in_tradegecko
+        current_account.channels.create(tradegecko_id: tradegecko_id, tradegecko_application_id: tradegecko_application_id)
+      end
       redirect_to "https://go.tradegecko.com/apps"
     when 'tradegecko'
       account = Account.find_or_create_from_omniauth(auth)
