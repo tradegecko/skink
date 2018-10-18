@@ -9,7 +9,7 @@ class AuthenticationsController < ApplicationController
       # Redirect to a step in the setup flow
       tradegecko_id = create_channel_in_tradegecko
       current_account.channels.create(tradegecko_id: tradegecko_id, tradegecko_application_id: tradegecko_application_id)
-      redirect_to "http://go.lvh.me:3000/integrations/shopify-install/location-setting/174"
+      redirect_to "https://go.tradegecko.com/apps"
     when 'tradegecko'
       account = Account.find_or_create_from_omniauth(auth)
       token = OAuth2::AccessToken.new(OAuthSession.oauth_client,
