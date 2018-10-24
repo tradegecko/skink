@@ -7,7 +7,7 @@ class ChannelsController < ApplicationController
   end
 
   def settings
-    @channel.update(settings: channel_params[:settings])
+    @channel.update(settings: channel_params)
     render json: @channel.settings.to_json
   end
 
@@ -22,6 +22,6 @@ private
   end
 
   def channel_params
-    params.require(:channel).permit!
+    params.permit!
   end
 end

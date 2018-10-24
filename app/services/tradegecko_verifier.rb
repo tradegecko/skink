@@ -23,7 +23,7 @@ private
   def request_data
     data = request.body.read.to_s
     request.body.rewind
-    data.presence || params[:id]
+    data == "{}" ? params[:id] : data
   end
 
   def verification_passed?
