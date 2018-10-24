@@ -13,7 +13,7 @@ class AuthenticationsController < ApplicationController
       end
 
       redirect_to "https://go.tradegecko.com/apps"
-    when 'tradegecko'
+    when 'tradegecko_lazada'
       # Clicking install from TradeGecko would redirect the user to this URL:
       # https://tradegecko-skink.herokuapp.com/auth/tradegecko
 
@@ -36,6 +36,18 @@ class AuthenticationsController < ApplicationController
       # process with Lazada
 
       redirect_to lazada_auth_url
+
+    when 'tradegecko_iconic'
+      account = Account.find_or_create_from_omniauth(auth)
+      token = OAuth2::AccessToken.new(OAuthSession.oauth_client,
+        auth["credentials"]["token"],
+        auth["credentials"].slice("refresh_token", "expires_at")
+      )
+      account.update_from_access_token(token)
+      session[:account_id] = account.id
+      session[:user_id] = auth.uid
+
+      redirect_to iconic_auth_url
     end
   end
 
@@ -61,6 +73,10 @@ private
 
   def auth
     request.env["omniauth.auth"]
+  end
+
+  def iconic_auth_url
+    'https://sellercenter.theiconic.com.au/'
   end
 
   def lazada_auth_url

@@ -16,7 +16,7 @@ class TradegeckoVerifier
 private
 
   def calculated_hmac
-    digest  = OpenSSL::Digest.new('sha256')
+    digest = OpenSSL::Digest.new('sha256')
     Base64.encode64(OpenSSL::HMAC.digest(digest, ENV['OAUTH_SECRET'], request_data)).strip
   end
 

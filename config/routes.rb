@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   get '/channels/:id/logs', to: 'error_logs#index'
   post '/channels/:id/logs/:error_id/ignore', to: 'error_logs#ignore'
   post '/channels/:id/logs/:error_id/retry', to: 'error_logs#retry'
+  get '/auth/:provider/setup', to: 'sessions#setup'
 end
