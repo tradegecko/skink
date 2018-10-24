@@ -1,24 +1,9 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+TRADEGECKO_API_URL=http://api.tradegecko.com
+OAUTH_SECRET=XXXXXXXXXXXXXXXXXXXXXXXX
+OAUTH_ID=XXXXXXXXXXXXXXXXXXXXXXXX
+INTEGRATOR_URL=https://tradegecko-skink.herokuapp.com
+LAZADA_APP_KEY=123456
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+In order for the app to work, these settings needs to be placed on your `.env` file
