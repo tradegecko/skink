@@ -1,0 +1,14 @@
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>"><%= value %></div>
+<% end %>
+
+<h1>Editing a Channel</h1>
+
+<%= form_with scope: :channel, url: channel_path(@channel.tradegecko_id), method: :put do |f| %>
+  <%= f.label :error_count %>
+  <%= f.text_field :error_count %>
+  <%= f.label :connection_status %>
+  <%= f.select :connection_status, ['Active', 'Disconnected'] %>
+  <br><br>
+  <%= f.submit "Update", class: "btn-green btn-hollow" %>
+<% end %>

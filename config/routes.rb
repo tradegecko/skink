@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   post '/channels/:id/logs/:error_id/ignore', to: 'error_logs#ignore'
   post '/channels/:id/logs/:error_id/retry', to: 'error_logs#retry'
   get '/auth/:provider/setup', to: 'sessions#setup'
+
+  resources :channels, only: [:edit, :update]
 end
