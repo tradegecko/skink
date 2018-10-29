@@ -7,12 +7,13 @@ class AuthenticationsController < ApplicationController
       # Create a Channel in TradeGecko
       # Create Webhooks in a background job (optional)
       # Using the TradeGecko channel_id, redirect to a step in the setup flow
-      unless current_account.channels.first
+      channel = current_account.channels.first
+      unless channel
         tradegecko_id = create_channel_in_tradegecko
-        current_account.channels.create(tradegecko_id: tradegecko_id, tradegecko_application_id: tradegecko_application_id)
+        channel = current_account.channels.create(tradegecko_id: tradegecko_id, tradegecko_application_id: tradegecko_application_id)
       end
 
-      redirect_to "https://go.tradegecko.com/apps"
+      redirect_to "https://go.tradegecko.com/integrations/#{channel.tradegecko_id}/install/channel-name"
     when 'tradegecko_lazada'
       # Clicking install from TradeGecko would redirect the user to this URL:
       # https://tradegecko-skink.herokuapp.com/auth/tradegecko
