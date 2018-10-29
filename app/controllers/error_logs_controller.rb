@@ -1,5 +1,5 @@
 class ErrorLogsController < ApplicationController
-  before_action :verify_request
+  before_action :verify_request, except: :create
   before_action :load_collection, only: :index
   before_action :load_resource, only: [:ignore, :retry]
 
@@ -11,6 +11,12 @@ class ErrorLogsController < ApplicationController
       @error_logs = @error_logs.limit(end_idx)[start_idx..end_idx]
     end
     render json: @error_logs
+  end
+
+  # Used to create error logs for testing purposes
+  def create
+    @error_log = ErrorLog.create(permitted_create_params.merge({ channel_id: params[:id] }))
+    render json: @error_log
   end
 
   def ignore
@@ -50,5 +56,9 @@ private
 
   def end_idx
     start_idx + limit
+  end
+
+  def permitted_create_params
+    params.require(:error_log).permit(:message, :verb, :resource_reference_id)
   end
 end
