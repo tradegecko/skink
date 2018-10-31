@@ -10,6 +10,7 @@ class ErrorLogsController < ApplicationController
     if limit
       @error_logs = @error_logs.limit(end_idx)[start_idx..end_idx]
     end
+    puts(@error_logs)
     render json: @error_logs
   end
 
