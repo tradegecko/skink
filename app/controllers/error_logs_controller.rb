@@ -4,12 +4,13 @@ class ErrorLogsController < ApplicationController
   before_action :load_resource, only: [:ignore, :retry]
 
   def index
-    if params[:term]
-      @error_logs = @error_logs.where("message LIKE ?", "%#{params[:term]}%")
-    end
-    if limit
-      @error_logs = @error_logs.limit(end_idx)[start_idx..end_idx]
-    end
+    @error_logs = ErrorLog.all
+    # if params[:term]
+    #   @error_logs = @error_logs.where("message LIKE ?", "%#{params[:term]}%")
+    # end
+    # if limit
+    #   @error_logs = @error_logs.limit(end_idx)[start_idx..end_idx]
+    # end
     puts(@error_logs)
     render json: @error_logs
   end
