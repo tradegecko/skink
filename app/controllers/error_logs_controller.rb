@@ -11,8 +11,7 @@ class ErrorLogsController < ApplicationController
     # if limit
     #   @error_logs = @error_logs.limit(end_idx)[start_idx..end_idx]
     # end
-    puts(@error_logs)
-    render json: @error_logs
+    render json: @error_logs, meta: { total_records: @error_logs.size }
   end
 
   # Used to create error logs for testing purposes
@@ -51,7 +50,7 @@ private
   def offset
     params[:offset] ? params[:offset].to_i : 0
   end
-  
+
   def start_idx
     offset * limit
   end
