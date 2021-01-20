@@ -1,5 +1,5 @@
 class ErrorLogsController < ApplicationController
-  before_action :verify_request, except: :create
+  # before_action :verify_request, except: :create
   before_action :load_collection, only: :index
   before_action :load_resource, only: [:ignore, :retry]
 
