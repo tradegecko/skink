@@ -11,6 +11,7 @@ class AuthenticationsController < ApplicationController
       unless channel
         tradegecko_id = create_channel_in_tradegecko
         channel = current_account.channels.create(tradegecko_id: tradegecko_id, tradegecko_application_id: tradegecko_application_id)
+        create_sample_errors(channel)
       end
 
       redirect_to "https://go.tradegecko.com/integrations/#{channel.tradegecko_id}/install/channel-name"
@@ -66,6 +67,12 @@ private
       payload: { channel: { name: "Lazada SG", site: "https://www.lazada.sg/shop/LAZOP-Test-3" } }
     })
     JSON.parse(response.body)["oauth_channel"]["id"]
+  end
+
+  def create_sample_errors(channel)
+    100.times do |i|
+      channel.error_logs.new(message: "Test #{i}", verb: "Import", resource_reference: ResourceReference.new()).save
+    end
   end
 
   def tradegecko_application_id

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'admin/index'
+  post 'admin/clear_all'
   root "home#index"
   get 'logout', to: 'sessions#destroy'
   get '/auth/:provider/callback', to: 'authentications#callback'
