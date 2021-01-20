@@ -16,7 +16,7 @@ class AuthenticationsController < ApplicationController
       redirect_to "https://go.tradegecko.com/integrations/#{channel.tradegecko_id}/install/channel-name"
     when 'tradegecko_lazada'
       # Clicking install from TradeGecko would redirect the user to this URL:
-      # https://tradegecko-skink.herokuapp.com/auth/tradegecko
+      # https://tradegecko-skink.herokuapp.com/auth/tradegecko_lazada
 
       # This should start the Oauth dance with TradeGecko
 
@@ -63,7 +63,7 @@ private
       method: :post,
       url: "#{ENV['TRADEGECKO_API_URL']}/channels",
       headers: { authorization: "Bearer #{current_account.access_token}" },
-      payload: { channel: { name: "LAZOP Test 3", site: "https://www.lazada.sg/shop/LAZOP-Test-3" } }
+      payload: { channel: { name: "Lazada SG", site: "https://www.lazada.sg/shop/LAZOP-Test-3" } }
     })
     JSON.parse(response.body)["oauth_channel"]["id"]
   end

@@ -1,17 +1,17 @@
 class ErrorLogsController < ApplicationController
-  # before_action :verify_request, except: :create # TODO: uncomment
+  before_action :verify_request, except: :create
   before_action :load_collection, only: :index
   before_action :load_resource, only: [:ignore, :retry]
 
   def index
     @error_logs = ErrorLog.all
-    # if params[:term]
-    #   @error_logs = @error_logs.where("message LIKE ?", "%#{params[:term]}%")
-    # end
-    # if limit
-    #   @error_logs = @error_logs.limit(end_idx)[start_idx..end_idx]
-    # end
-    render json: @error_logs, meta: { total_records: @error_logs.size }
+    if params[:term]
+      @error_logs = @error_logs.where("message LIKE ?", "%#{params[:term]}%")
+    end
+    if limit
+      @error_logs = @error_logs.limit(end_idx)[start_idx..end_idx]
+    end
+    render json: @error_logs, meta: { total_records: @error_logs.size }, adapter: :json
   end
 
   # Used to create error logs for testing purposes
