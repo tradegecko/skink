@@ -11,7 +11,7 @@ class ErrorLogsController < ApplicationController
     if limit
       @error_logs = @error_logs.limit(end_idx)[start_idx..end_idx]
     end
-    render json: @error_logs, meta: { total_records: @error_logs.size }, adapter: :json
+    render json: @error_logs, root: :error_logs, meta: { total_records: @error_logs.size }, adapter: :json
   end
 
   # Used to create error logs for testing purposes
