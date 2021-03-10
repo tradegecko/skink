@@ -5,13 +5,13 @@ class ErrorLogsController < ApplicationController
 
   def index
     @error_logs = ErrorLog.all
-    if params[:term]
-      @error_logs = @error_logs.where("message LIKE ?", "%#{params[:term]}%")
-    end
     if limit
-      @error_logs = @error_logs.limit(end_idx)[start_idx..end_idx]
+      @error_logs = ErrorLog.all.limit(limit).offset(offset)
     end
-    render json: @error_logs, root: :error_logs, meta: { total_records: @error_logs.size }, adapter: :json
+    if params[:term]
+      @error_logs = ErrorLog.where("message LIKE ?", "%#{params[:term]}%").limit(limit).offset(offset)
+    end
+    render json: @error_logs, root: :error_logs, meta: { total_records: ErrorLog.count }, adapter: :json
   end
 
   # Used to create error logs for testing purposes
@@ -47,16 +47,12 @@ private
     params[:limit] ? params[:limit].to_i : nil
   end
 
+  def page
+    params[:page] ? params[:page].to_i : 1
+  end
+
   def offset
-    params[:offset] ? params[:offset].to_i : 0
-  end
-
-  def start_idx
-    offset * limit
-  end
-
-  def end_idx
-    start_idx + limit
+    (page - 1) * limit
   end
 
   def permitted_create_params
