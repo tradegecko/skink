@@ -14,7 +14,7 @@ class AuthenticationsController < ApplicationController
         create_sample_errors(channel)
       end
 
-      redirect_to "https://go.tradegecko.com/integrations/#{channel.tradegecko_id}/install/channel-name"
+      redirect_to "#{ENV['TRADEGECKO_APP_URL']}/integrations/#{channel.tradegecko_id}/install/channel-name"
     when 'tradegecko_lazada'
       # Clicking install from TradeGecko would redirect the user to this URL:
       # https://tradegecko-skink.herokuapp.com/auth/tradegecko_lazada
@@ -37,7 +37,8 @@ class AuthenticationsController < ApplicationController
       # Once the Account record is created we should now start the authentication
       # process with Lazada
 
-      redirect_to lazada_auth_url
+      # redirect_to lazada_auth_url
+      redirect_to "/auth/lazada"
 
     when 'tradegecko_iconic'
       account = Account.find_or_create_from_omniauth(auth)
