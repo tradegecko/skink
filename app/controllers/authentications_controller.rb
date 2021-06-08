@@ -38,7 +38,7 @@ class AuthenticationsController < ApplicationController
       # process with Lazada
 
       # redirect_to lazada_auth_url
-      redirect_to "/auth/lazada"
+      redirect_to "/auth/lazada/callback"
 
     when 'tradegecko_iconic'
       account = Account.find_or_create_from_omniauth(auth)
