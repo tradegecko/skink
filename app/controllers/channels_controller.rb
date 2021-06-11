@@ -1,6 +1,6 @@
 class ChannelsController < ApplicationController
-  before_action :verify_request, only: [:show, :settings]
   before_action :load_resource
+  before_action :verify_request, only: [:show, :settings]
 
   def show
     render json: @channel.settings.to_json
@@ -31,7 +31,7 @@ class ChannelsController < ApplicationController
 private
 
   def verify_request
-    TradegeckoVerifier.new(request).run
+    TradegeckoVerifier.new(request, @channel.tradegecko_application.client_secret).run
   end
 
   def load_resource

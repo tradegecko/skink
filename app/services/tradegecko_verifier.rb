@@ -1,10 +1,11 @@
 class TradegeckoVerifier
   class UnverifiedRequest < StandardError; end
   delegate :params, :headers, to: :request
-  attr_reader :request
+  attr_reader :request, :verifier_token
 
-  def initialize(request)
+  def initialize(request, verifier_token)
     @request = request
+    @verifier_token = verifier_token
   end
 
   def run
@@ -17,7 +18,7 @@ private
 
   def calculated_hmac
     digest = OpenSSL::Digest.new('sha256')
-    Base64.encode64(OpenSSL::HMAC.digest(digest, ENV['OAUTH_SECRET'], request_data)).strip
+    Base64.encode64(OpenSSL::HMAC.digest(digest, verifier_token, request_data)).strip
   end
 
   def request_data
