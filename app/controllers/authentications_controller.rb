@@ -15,7 +15,7 @@ class AuthenticationsController < ApplicationController
       end
 
       redirect_to "#{ENV['TRADEGECKO_APP_URL']}/integrations/#{channel.tradegecko_id}/install/channel-name"
-    when 'tradegecko_lazada'
+    when 'tradegecko_lazada', 'tradegecko_onesass'
       # Clicking install from TradeGecko would redirect the user to this URL:
       # https://tradegecko-skink.herokuapp.com/auth/tradegecko_lazada
 
@@ -65,7 +65,7 @@ private
       method: :post,
       url: "#{ENV['TRADEGECKO_API_URL']}/channels",
       headers: { authorization: "Bearer #{current_account.access_token}" },
-      payload: { channel: { name: "Lazada SG", site: "https://www.lazada.sg/shop/LAZOP-Test-3" } }
+      payload: { channel: { name: Faker::Company.unique.name, site: Faker::Internet.unique.url } }
     })
     JSON.parse(response.body)["oauth_channel"]["id"]
   end
