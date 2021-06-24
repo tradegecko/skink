@@ -7,12 +7,10 @@ class AuthenticationsController < ApplicationController
       # Create a Channel in TradeGecko
       # Create Webhooks in a background job (optional)
       # Using the TradeGecko channel_id, redirect to a step in the setup flow
-      channel = current_account.channels.first
-      unless channel
-        tradegecko_id = create_channel_in_tradegecko
-        channel = current_account.channels.create(tradegecko_id: tradegecko_id, tradegecko_application_id: tradegecko_application_id)
-        create_sample_errors(channel)
-      end
+      
+      tradegecko_id = create_channel_in_tradegecko
+      channel = current_account.channels.create(tradegecko_id: tradegecko_id, tradegecko_application_id: tradegecko_application_id)
+      create_sample_errors(channel)
 
       redirect_to "#{ENV['TRADEGECKO_APP_URL']}/integrations/#{channel.tradegecko_id}/install/channel-name"
     when 'tradegecko_lazada', 'tradegecko_onesass'
